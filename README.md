@@ -6,7 +6,7 @@ Features:
 
 Single-Player Mode: Play against a basic AI opponent.
 
-Two-Player Mode: Enjoy a classic face-off against a friend.(will be added soon)
+Two-Player Mode: Enjoy a classic face-off against a friend.
 
 User-Friendly Interface: Clean and intuitive design for seamless gameplay.
 
