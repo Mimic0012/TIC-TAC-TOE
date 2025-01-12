@@ -1,29 +1,51 @@
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #include <time.h>
 #include <stdlib.h>
 
 char board [3][3]; //we have created a 2d array of char which can hold x and o
-char PLAYER;
+char PLAYER1;
+char PLAYER2;
+char name1[30];
+char name2[30];
 char COMPUTERS;
 
+
+int MultiPlayer();
+void playername();
 void updateglobalvariable();//updates the global variable
-void resetBoard();  //reset the board
-void printBoard();  // print our board which is a 2d array
-int checkFreespaces(); // checks free spaces if it is zero than the game is over
-void playerMove();   // checks and make player moves
-void computerMove(); // checks and make computers moves
-char checkWinner();  // checks who is the winner
-void printWinner(char);  // prints the winner
+void resetBoard();//reset the board
+void printBoard();//print our board which is a 2d array
+int checkFreespaces();//checks free spaces if it is zero than the game is over
+void PLAYERMove1();//checks and make PLAYER11 move
+void PLAYERMove2();//checks and make player1 move
+void computerMove();//checks and make computers moves
+char checkWinner();//checks who is the winner
+void printWinner(char);//prints the winner
 
 
 int main ()
 {
     char winner =' ';// winner is not decided yet if X wins then it will show x,we can modify this variable later on
     char response;
-    updateglobalvariable();
-    printf("Player's symbol: %c\n",PLAYER); 
-    printf("Computer's symbol: %c\n",COMPUTERS);
+    int mode = MultiPlayer();
+
+    playername(mode);
+    updateglobalvariable(mode);
+
+    if(mode == 1)
+    {
+        printf("Player1's symbol: %c\n",PLAYER1);
+        printf("Player2's symbol: %c\n",PLAYER2);
+        printf("player1's name: %s\n",name1);
+        printf("player2's name: %s\n",name2);
+    } 
+    else if (mode==0)
+    {
+        printf("Player1's symbol: %c\n",PLAYER1);
+        printf("Computer's symbol: %c\n",COMPUTERS);  
+    }
 
     do
     {
@@ -33,21 +55,41 @@ int main ()
         while(winner==' ' && checkFreespaces() !=0) //
         {
             printBoard();
-            playerMove();//this is only for the value
-            winner = checkWinner();//this will return values of the return values which will be like X OR O
-            if(winner !=' '|| checkFreespaces() ==0)
+            if(mode==1)
             {
-                break;
-            }
+                PLAYERMove1();//this is only for the value
+                winner = checkWinner();//this will return values of the return values which will be like X OR O
+                if(winner !=' '|| checkFreespaces() ==0)
+                {
+                    break;
+                }
 
-            computerMove();
-            winner = checkWinner();
-            if(winner !=' '|| checkFreespaces() ==0)
+                printBoard();
+
+                PLAYERMove2();//this is only for the value
+                winner = checkWinner();//this will return values of the return values which will be like X OR O
+                if(winner !=' '|| checkFreespaces() ==0)
+                {
+                    break;
+                }
+            }
+            else if(mode==0)
             {
-                break;
+                PLAYERMove1();//this is only for the value
+                winner = checkWinner();//this will return values of the return values which will be like X OR O
+                if(winner !=' '|| checkFreespaces() ==0)
+                {
+                    break;
+                }
+
+                computerMove();
+                winner = checkWinner();
+                if(winner !=' '|| checkFreespaces() ==0)
+                {
+                    break;
+                }   
             }
         }
-
         printBoard();// Print the board after the game loop ends
         printWinner(winner);// Print the winner after the game loop ends
 
@@ -60,20 +102,67 @@ int main ()
     return 0;
 }
 
-void updateglobalvariable()
+int MultiPlayer()
 {
-    printf("please enter what you want to play as 'X' OR 'O'\n");
-    scanf(" %c",&PLAYER);//gap should be given to avoid the newline be taken by the buffer
-    PLAYER = toupper(PLAYER);//ctype is used to make char uppercase its not necessary
-    if(PLAYER == 'X')
+    char a;
+    printf("Do you want to play as a multiplayer (y/n)\n");
+    scanf(" %c",&a);
+    a = toupper(a);
+    if(a == 'Y')
+    {
+        return 1;
+    }
+    else if(a == 'N')
+    {
+        return 0;
+    }
+    else
+    {
+        printf("Invalid choice. Please choose 'Y' or 'N'.\n");
+        return MultiPlayer();
+    }    
+}
+
+void playername(int mode)
+{
+    if(mode == 0)
+    {
+       printf("Please choose a name (Player1)\n");
+       scanf("%s",name1);
+    }
+    else
+    {
+        printf("Please choose a name (Player1)\n");
+        scanf("%s",name1);
+        printf("Please choose a name (Player2)\n");
+        scanf("%s",name2);
+    }
+}
+
+void updateglobalvariable(int mode)
+{
+    printf("please enter what you want to play as player1 'X' OR 'O'\n");
+    scanf(" %c",&PLAYER1);
+    PLAYER1 = toupper(PLAYER1);
+    if(PLAYER1 =='X' && mode == 1)// use == for comparison
+    {
+        PLAYER2 = 'O';//use single quotes for characters
+    }else if (PLAYER1 == 'O' && mode==1)
+    {
+        PLAYER2 = 'X';
+    }
+    else if (PLAYER1 == 'X' && mode==0)
     {
         COMPUTERS = 'O';
-    }else if (PLAYER == 'O')
+    }
+    else if(PLAYER1 == 'O' && mode==0)
     {
         COMPUTERS = 'X';
-    }else{
+    }
+    else
+    {
         printf("Invalid choice. Please choose 'X' or 'O'.\n");
-        updateglobalvariable();// Prompt the user again for a correct choice
+        updateglobalvariable(mode);// Prompt the user again for a correct choice
     }
 }
 
@@ -112,29 +201,63 @@ int checkFreespaces()
     }
     return freespaces;
 }
-void playerMove()
+
+void PLAYERMove1()
 {
     int x,y;
     do
     {
-        printf("please enter rows#(1-3)\n");
+        printf("(Player1)please enter rows#(1-3)\n");
         scanf("%d",&x);
         x--; //
-        printf("please enter the columns#(1-3)\n");
+        printf("(Player1)please enter the columns#(1-3)\n");
         scanf("%d",&y);
         y--;
-
-        if(board[x][y]!=' ')
+        if (x < 0 || x > 2 || y < 0 || y > 2)
         {
-            printf("Invalid move.The spot is already taken");
+            printf("(Player1)Invalid move");
+            PLAYERMove1();
+        }
+        else if(board[x][y]!=' ')
+        {
+            printf("(Player1)Invalid move.The spot is already taken");
         }
         else{
-            board[x][y]= PLAYER;// jo bhi move chala he use PLAYER KE EQUAL kardiya which is equal to the user what they have chosen above
+            board[x][y] = PLAYER1;// jo bhi move chala he use PLAYER KE EQUAL kardiya which is equal to the user what they have chosen above
             break; //if it enters the correct cond then it will break
         }
     } while (board[x][y]!=' ');//if the board is not occupied then we will prompt the user to enter a choice again
     
 }
+
+void PLAYERMove2()
+{
+    int x,y;
+    do
+    {
+        printf("(Player2)please enter rows#(1-3)\n");
+        scanf("%d",&x);
+        x--; //
+        printf("(Player2)please enter the columns#(1-3)\n");
+        scanf("%d",&y);
+        y--;
+        if (x < 0 || x > 2 || y < 0 || y > 2)
+        {
+            printf("(Player1)Invalid move");
+            PLAYERMove2();
+        }
+        else if(board[x][y]!= ' ')
+        {
+            printf("(Player2)Invalid move.The spot is already taken");
+        }
+        else{
+            board[x][y] = PLAYER2;
+            break;
+        }
+    }
+    while (board[x][y] != ' '); 
+}
+
 void computerMove()
 {
     srand(time(0));
@@ -184,15 +307,20 @@ char checkWinner()
     return ' '; //if there is no winner yet
     
 }
+
 void printWinner(char winner)
 {
-    if(winner == PLAYER)
+    if(winner == PLAYER1)
     {
-        printf("YOU WIN!\n");
+        printf("YOU WIN!->%s\n",name1);
+    }else if(winner == PLAYER2)
+    {
+        printf("YOU WIN!->%s\n",name2);
     }else if(winner == COMPUTERS)
     {
         printf("YOU LOOSE!\n");
-    }else{
-        printf("IT'S A TIE!\n");
+    }
+    else{
+        printf("ITS A TIE!");
     }
 }
