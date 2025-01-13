@@ -20,6 +20,4 @@ Two-Player Mode: Enjoy a classic face-off against a friend.
 
 User-Friendly Interface: Clean and intuitive design for seamless gameplay.
 
-Responsive Design: Optimized for various screen sizes and devices.
-
 Feel free to contribute by opening issues or submitting pull requests. Happy gaming!
