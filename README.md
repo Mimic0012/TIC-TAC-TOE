@@ -1,9 +1,13 @@
 # TIC-TAC-TOE
-##SCREENSHOT OF THE GAME
+
+# SCREENSHOT OF THE GAME
+
 ![image alt](https://github.com/Mimic0012/TIC-TAC-TOE/blob/a15906fcb7b194102645640a14c1fb540a255566/image_2025-01-13_153237703.png)
 
 ![image alt](https://github.com/Mimic0012/TIC-TAC-TOE/blob/ddd4eb3b78967e4f5b2e51312cfc4846aed0d48b/WhatsApp%20Image%202025-01-12%20at%2023.22.04_7a04ed81.jpg)
 
+
+# GAME DESCRIPTION
 
 Welcome to my Tic Tac Toe game repository! 🎮
 
