@@ -1,4 +1,8 @@
 # TIC-TAC-TOE
+
+![image alt](https://github.com/Mimic0012/TIC-TAC-TOE/blob/ddd4eb3b78967e4f5b2e51312cfc4846aed0d48b/WhatsApp%20Image%202025-01-12%20at%2023.22.04_7a04ed81.jpg)
+
+
 Welcome to my Tic Tac Toe game repository! 🎮
 
 This is a simple yet addictive game where two players take turns marking the spaces in a 3×3 grid with X and O. The first player to align three of their marks horizontally, vertically, or diagonally wins the game. If all nine squares are filled and neither player has three in a row, the game is a draw.
